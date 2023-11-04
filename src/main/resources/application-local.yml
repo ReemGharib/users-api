@@ -1,0 +1,58 @@
+info:
+  app:
+    tag: app-build-version-tag
+
+server:
+    port: 8080
+    servlet:
+        context-path: /users-api
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cargobreakbulk
+    username: postgres
+    password: pg@reem@12
+    driver-class-name: org.postgresql.Driver
+
+  sql:
+    init:
+      platform: postgres
+      mode: always
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        hbm2ddl:
+          auto: validate
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+                exclude: archaius,auditevents,beans,caches,caches-cache,conditions,configprops,bus-env,bus-env-destination,bus-refresh,bus-refresh-destination,env-toMatch,env,integrationgraph,loggers,loggers-name,heapdump,threaddump,metrics-requiredMetricName,metrics,scheduledtasks,httptrace,mappings,refresh,features,bindings-name,bindings,channels,consul
+    endpoint:
+        prometheus:
+            enabled: true
+        metrics:
+            enabled: true
+    metrics:
+        export:
+            prometheus:
+                enabled: true
+
+
