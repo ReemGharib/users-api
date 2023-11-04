@@ -2,14 +2,14 @@ info:
   app:
     tag: app-build-version-tag
 
-server:
-    port: 8080
-    servlet:
-        context-path: /users-api
+#server:
+#    port: 8080
+#    servlet:
+#        context-path: /users-api/v1
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/cargobreakbulk
+    url: jdbc:postgresql://localhost:5432/users
     username: postgres
     password: pg@reem@12
     driver-class-name: org.postgresql.Driver

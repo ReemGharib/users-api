@@ -1,6 +1,5 @@
 package com.users.api.service.impl;
 
-
 import com.users.api.dto.UserDetails;
 import com.users.api.dto.UserDto;
 import com.users.api.dto.UserListResponse;
@@ -106,7 +105,6 @@ public class DefaultUserService implements UserService {
             throw new PersistResourceException(String.format("Error while updating user with ccgId = [%s] ", userDetails.getUid()));
         }
     }
-
 
     @Override
     public UserListResponse getAllUserDetails(UserDto userDto) {

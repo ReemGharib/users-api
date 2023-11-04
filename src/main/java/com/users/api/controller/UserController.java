@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping("/")
     public ResponseEntity<UserListResponse> getAllUsers(String range, String role, String uid, String firstName,
                                                         String lastName, String email, Boolean active) {
 
