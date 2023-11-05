@@ -1,20 +1,24 @@
 package com.users.api.dto;
 
 import jakarta.validation.Valid;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.List;
-@Getter
+
+/**
+ * @author Reem Gharib
+ */
 @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class UserListResponse {
 
     @Valid
-    private List<@Valid Resource> resources;
-
-    private Integer itemsPerPage;
-
-    private Integer startIndex;
+    private List<@Valid UserDetails> resources;
 
     private Long totalResults;
 }

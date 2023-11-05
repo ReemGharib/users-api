@@ -1,11 +1,10 @@
 package com.users.api.support;
 
 import com.users.api.dto.Name;
-import com.users.api.dto.Resource;
 import com.users.api.dto.UserDetails;
-import com.users.api.dto.UserResponse;
 import com.users.api.model.User;
 import com.users.api.model.enums.Role;
+import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -13,6 +12,9 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+
+import static java.lang.String.format;
 
 /**
  * @author Reem Gharib
@@ -40,14 +42,8 @@ public class UserSupport {
      * @param user the user
      * @return UserResponse
      */
-    public UserResponse populateUserResponse(User user) {
-
-        UserResponse userResponse = new UserResponse();
-        UserDetails userDetails = this.populateUserDetails(user);
-
-        userResponse.setUser(userDetails);
-
-        return userResponse;
+    public UserDetails populateUserResponse(User user) {
+        return this.populateUserDetails(user);
     }
 
     /**
@@ -83,11 +79,11 @@ public class UserSupport {
      * @param users the users
      * @return list of resources
      */
-    public List<Resource> populateResources(List<User> users) {
+    public List<UserDetails> populateResources(List<User> users) {
 
-        List<Resource> resources = new ArrayList<>();
+        List<UserDetails> resources = new ArrayList<>();
 
-        users.forEach(user -> resources.add(Resource.builder()
+        users.forEach(user -> resources.add(UserDetails.builder()
                 .uid(user.getUid())
                 .name(Name.builder()
                         .firstName(user.getFirstName())
@@ -113,5 +109,42 @@ public class UserSupport {
         return localDateTime != null
                 ? localDateTime.atOffset(ZoneId.systemDefault().getRules().getOffset(localDateTime))
                 : null;
+    }
+
+
+    /**
+     * Validate user
+     *
+     * @param userDto the user details
+     */
+    public void validateUser(UserDetails userDto) {
+
+        Validate.notBlank(userDto.getUid(), "User doesn't have uid");
+
+        // Validate email
+        if (!this.validateEmail(userDto.getEmail())) {
+            throw new IllegalArgumentException("Email is not valid!");
+        }
+
+        Validate.notBlank(userDto.getUserName(), format("User of ccgId [%s] doesn't have username", userDto.getUid()));
+        Validate.notBlank(userDto.getName().getFirstName(), format("User of ccgId [%s] doesn't have firstName", userDto.getUid()));
+        Validate.notBlank(userDto.getName().getLastName(), format("User of ccgId [%s] doesn't have lastName", userDto.getUid()));
+        Validate.notBlank(userDto.getRole(), format("User of ccgId [%s] doesn't have role", userDto.getUid()));
+    }
+
+    /**
+     * Validate email
+     *
+     * @param emailAddress the email
+     * @return boolean
+     */
+    public boolean validateEmail(String emailAddress) {
+
+        Validate.notBlank(emailAddress, format("User of ccgId [%s] doesn't have email", emailAddress));
+
+        String regexPattern = "^[A-Za-z0-9+_.-]+@(.+\\.com)$";
+        return Pattern.compile(regexPattern)
+                .matcher(emailAddress)
+                .matches();
     }
 }

@@ -3,32 +3,54 @@ package com.users.api.service;
 import com.users.api.dto.UserDetails;
 import com.users.api.dto.UserDto;
 import com.users.api.dto.UserListResponse;
-import com.users.api.dto.UserResponse;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-import org.springframework.stereotype.Service;
 
 
 /**
+ * The interface User Service
+ *
  * @author reem Gharib
  */
 public interface UserService {
 
+    /**
+     * Get all users details
+     *
+     * @param userDto the user dto
+     * @return UserListResponse
+     */
     UserListResponse getAllUserDetails(UserDto userDto);
 
-    UserResponse persistUser(UserDetails userDetails);
-
-    UserResponse updateUser(String uid, @Valid UserDetails userDetails);
+    /**
+     * Persist a new user
+     *
+     * @param userDetails the user details to save
+     * @return the created user
+     */
+    UserDetails persistUser(UserDetails userDetails);
 
     /**
+     * Update user associated with uid
+     *
+     * @param uid         update user
+     * @param userDetails the new user
+     * @return the Updated user
+     */
+    UserDetails updateUser(String uid, @Valid UserDetails userDetails);
+
+    /**
+     * Get user by uid
+     *
      * @param uid user ccgId
-     * @returnUserResponse
+     * @return UserResponse
      */
-    UserResponse getUserByUid(String uid);
+    UserDetails getUserByUid(String uid);
 
     /**
+     * Get user by email
+     *
      * @param email user mail
-     * @returnUserResponse
+     * @return UserResponse
      */
-    UserResponse getUserByEmail(String email);
+    UserDetails getUserByEmail(String email);
 }

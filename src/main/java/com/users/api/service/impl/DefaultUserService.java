@@ -3,20 +3,23 @@ package com.users.api.service.impl;
 import com.users.api.dto.UserDetails;
 import com.users.api.dto.UserDto;
 import com.users.api.dto.UserListResponse;
-import com.users.api.dto.UserResponse;
 import com.users.api.exception.*;
 import com.users.api.model.User;
 import com.users.api.model.enums.Role;
 import com.users.api.repository.UserRepository;
 import com.users.api.service.UserService;
+import com.users.api.support.CustomPageable;
 import com.users.api.support.UserSupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 import static java.lang.String.format;
@@ -34,7 +37,9 @@ public class DefaultUserService implements UserService {
     private final UserSupport userSupport;
 
     @Override
-    public UserResponse persistUser(UserDetails userDetails) {
+    public UserDetails persistUser(UserDetails userDetails) {
+
+        this.userSupport.validateUser(userDetails);
 
         this.userRepository.checkUserExistsByUid(userDetails.getUid());
         this.userRepository.checkUserExistsByEmail(userDetails.getEmail());
@@ -55,7 +60,7 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public UserResponse getUserByUid(String uid) {
+    public UserDetails getUserByUid(String uid) {
 
         User user = userRepository.findByUid(uid)
                 .orElseThrow(() -> new UserNotFoundException(format("User Not found with ccgId: [%s]", uid)));
@@ -64,7 +69,7 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public UserResponse getUserByEmail(String email) {
+    public UserDetails getUserByEmail(String email) {
 
         User user = userRepository.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new UserNotFoundException(format("User Not found with email: [%s]", email)));
@@ -73,7 +78,9 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public UserResponse updateUser(String uid, UserDetails userDetails) {
+    public UserDetails updateUser(String uid, UserDetails userDetails) {
+
+        this.userSupport.validateUser(userDetails);
 
         User existingUser = this.userRepository.findByUid(uid)
                 .orElseThrow(() -> new UserNotFoundException(format("User Not found with ccgId: [%s]", uid)));
@@ -109,8 +116,16 @@ public class DefaultUserService implements UserService {
     @Override
     public UserListResponse getAllUserDetails(UserDto userDto) {
 
+        // static values..
+        int offset = 0;
+        int limit = 10;
+
+        Sort sort = Sort.by(Collections.singletonList(Sort.Order.asc("uid")));
+        Pageable pageable = new CustomPageable(limit, offset, sort);
+
+
         List<User> users = this.userRepository.findAll(
-                this.userRepository.filterUsers(userDto)).getContent();
+                this.userRepository.filterUsers(userDto), pageable).getContent();
 
         if (CollectionUtils.isEmpty(users)) {
             long count = this.userRepository.count(this.userRepository.filterUsers(new UserDto()));

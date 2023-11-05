@@ -2,6 +2,9 @@ package com.users.api.dto;
 
 import lombok.*;
 
+/**
+ * @author Reem Gharib
+ */
 @Builder
 @Getter
 @Setter
@@ -22,5 +25,4 @@ public class UserDetails {
     private String role;
 
     private Boolean active = false;
-
 }

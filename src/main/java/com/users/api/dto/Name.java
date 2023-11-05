@@ -2,6 +2,9 @@ package com.users.api.dto;
 
 import lombok.*;
 
+/**
+ * @author Reem Gharib
+ */
 @Builder
 @Getter
 @Setter
@@ -10,8 +13,8 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 public class Name {
+
     private String firstName;
 
     private String lastName;
-
 }

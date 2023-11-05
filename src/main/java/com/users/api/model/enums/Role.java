@@ -10,7 +10,6 @@ import java.util.Arrays;
 public enum Role {
 
     ADMIN("admin", "Administrator"),
-    PCM("pcm", "project cargo managers"),
     OPS("ops", "operator");
 
     private final String name;

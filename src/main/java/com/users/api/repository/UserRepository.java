@@ -6,6 +6,7 @@ import com.users.api.exception.UserAlreadyExistsException;
 import com.users.api.model.User;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -28,7 +29,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findUserByEmailEqualsAndIdIsNot(String email, long id);
 
-    Page<User> findAll(Specification<User> userSpecification);
+    Page<User> findAll(Specification<User> userSpecification, Pageable pageable);
 
     Long count(Specification<User> caseSpecification);
 
@@ -63,15 +64,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
             }
 
             if (user.getRole() != null) {
-                predicates.add(criteriaBuilder.equal(root.get("role"), criteriaBuilder.literal(user.getRole())));
+                predicates.add(criteriaBuilder.equal(root.get("role"), criteriaBuilder.literal(user.getRole().toUpperCase())));
             }
 
             if (user.getIsActive() != null) {
                 predicates.add(criteriaBuilder.equal(root.get("active"), user.getIsActive()));
             }
 
-            // Combine all predicates with AND logic
-            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+            return !predicates.isEmpty() ? criteriaBuilder.and(predicates.toArray(new Predicate[0])) : null;
         };
     }
 
