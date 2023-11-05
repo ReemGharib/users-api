@@ -25,6 +25,9 @@ Before you begin using the users-api, make sure you have the following prerequis
     Installation
 To get started with the users-api, follow these steps:
 
+Install Postgresql and Liquibase
+
+
 Clone the repository to your local machine:
 
     bash
