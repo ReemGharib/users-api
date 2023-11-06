@@ -2,50 +2,39 @@ users-api README
 
 Overview
 
-The users-api is a Java backend API designed to manage user-related operations. It provides five main endpoints to facilitate user management: getAllUsers, CreateUser, UpdateUser, GetUserByUid, and GetUserByEmail. This README aims to provide you with all the necessary information to get started with the API.
+The Users API is a Java-based backend API that provides endpoints for managing user data. This documentation serves as a guide to help you understand how to interact with the API effectively. The API documentation is also available in Swagger for interactive exploration and testing.
 
-    1.Table of Contents
-    2.Prerequisites
-    3.Installation
-    4.Usage
-    5.Endpoints
-    6.Authentication
-    7.Request and Response Formats
-    8.Examples
-    9.Error Handling
-    10.Contributing
-    11.License
+**Table of Contents**
 
-    Prerequisites
+[1. Getting Started]()
+
+[2. API Endpoints]()
+
+[3. Error Handling]()
+
+[4. Interactive Documentation]()
+
+
+
+**Getting Started**
+
 Before you begin using the users-api, make sure you have the following prerequisites in place:
 
-    Java Development Kit (JDK) 17.
-    Apache Maven for building the project.
-    A database setup and configured for user data storage.
-    Installation
-To get started with the users-api, follow these steps:
-
-Install Postgresql and Liquibase
+    -Java Development Kit (JDK) 17.
+    -Apache Maven for building the project.
+    -Install Postgresql and Liquibase
+    -A database setup and configured for user data storage.
 
 
-Clone the repository to your local machine:
-
-    bash
-    Copy code
-    git clone https://github.com/your-username/users-api.git
-Build the project using Maven:
-
-    mvn clean package
-Run the application:
-
-    java -jar target/users-api.jar
+    
 The API should now be running on a local server (default: http://localhost:9999).
 
-    Usage:
-    The users-api can be used to manage user-related data in your application. You can make HTTP requests to its endpoints to perform various operations like creating, updating, and retrieving user data.
+BASE URL: http://localhost:9999/users/api
     
-    Endpoints:
-    Base Path: /users/api
+Usage:
+You can make HTTP requests to its endpoints to perform various operations like creating, updating, and retrieving user data.
+
+**API Endpoints**
 
     GET /users
 * Description: Get a list of all users.
@@ -77,22 +66,10 @@ The API should now be running on a local server (default: http://localhost:9999)
 Description: Get a user by their email address.
 Response: The user object with the specified email.
 
+**Error Handling**
 
-    Request and Response Formats
-    Describe the JSON request formats expected by each endpoint and the JSON response formats they return.
-    
-    Examples
-    Provide examples of how to use each endpoint with sample requests and responses.
-    
-    Error Handling
-    Explain how errors are handled and returned by the API, including possible error codes and descriptions.
-    
-    Contributing
-    If you would like to contribute to the users-api, please follow the guidelines outlined in the CONTRIBUTING.md file.
-    
-    License
-    This project is licensed under the MIT License - see the LICENSE file for details.
-    
-    Contact
-    If you have any questions or need further assistance, feel free to contact the project maintainers at [your-email@example.com].
+The API uses standard HTTP status codes to indicate the success or failure of a request. Detailed error messages are provided in the response body for better understanding of the issue.
 
+**Interactive Documentation**
+
+To interactively explore and test the API, you can access the Swagger documentation at https://api.example.com/users-api/swagger-ui.html. It provides a user-friendly interface for testing the API endpoints and understanding request and response formats

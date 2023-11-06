@@ -23,7 +23,7 @@ public class RestExceptionHandler {
     @ExceptionHandler({Throwable.class})
     public ResponseEntity<ErrorResponse> handleExceptions(Throwable e) {
 
-        return new ResponseEntity<>(this.getErrorResponse("ERR_", "An error occurred, contact the admin to check server logs", e)
+        return new ResponseEntity<>(this.getErrorResponse("ERROR_", "An error occurred, contact the admin to check server logs", e)
                 , null,
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -50,9 +50,9 @@ public class RestExceptionHandler {
     /**
      * Get Error response
      *
-     * @param code
-     * @param message
-     * @param e
+     * @param code    the code
+     * @param message the message
+     * @param e       the throwable
      * @return ErrorResponse
      */
     protected ErrorResponse getErrorResponse(String code, String message, Throwable e) {
