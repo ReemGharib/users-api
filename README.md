@@ -1,6 +1,6 @@
 users-api README
 
-Overview
+**Overview**
 
 The Users API is a Java-based backend API that provides endpoints for managing user data. This documentation serves as a guide to help you understand how to interact with the API effectively. The API documentation is also available in Swagger for interactive exploration and testing. It includes JUnit5 tests.
 
