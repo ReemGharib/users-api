@@ -52,7 +52,7 @@ public class DefaultUserService implements UserService {
         user.setCreatedDate(LocalDateTime.now());
 
         try {
-            return this.userSupport.populateUserResponse(this.userRepository.save(user));
+            return this.userSupport.populateUserDetails(this.userRepository.save(user));
         } catch (Exception e) {
             log.error("Error ", e);
             throw new PersistResourceException("Unable to persist user info of ccgId = " + userDetails.getUid());
@@ -65,7 +65,7 @@ public class DefaultUserService implements UserService {
         User user = userRepository.findByUid(uid)
                 .orElseThrow(() -> new UserNotFoundException(format("User Not found with ccgId: [%s]", uid)));
 
-        return this.userSupport.populateUserResponse(user);
+        return this.userSupport.populateUserDetails(user);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class DefaultUserService implements UserService {
         User user = userRepository.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new UserNotFoundException(format("User Not found with email: [%s]", email)));
 
-        return this.userSupport.populateUserResponse(user);
+        return this.userSupport.populateUserDetails(user);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class DefaultUserService implements UserService {
         user.setLastModifiedDate(LocalDateTime.now());
 
         try {
-            return this.userSupport.populateUserResponse(userRepository.save(user));
+            return this.userSupport.populateUserDetails(userRepository.save(user));
         } catch (Exception e) {
             log.info("Error = ", e);
             throw new PersistResourceException(String.format("Error while updating user with ccgId = [%s] ", userDetails.getUid()));
@@ -122,7 +122,6 @@ public class DefaultUserService implements UserService {
 
         Sort sort = Sort.by(Collections.singletonList(Sort.Order.asc("uid")));
         Pageable pageable = new CustomPageable(limit, offset, sort);
-
 
         List<User> users = this.userRepository.findAll(
                 this.userRepository.filterUsers(userDto), pageable).getContent();

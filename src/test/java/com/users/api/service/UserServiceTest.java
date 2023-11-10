@@ -88,7 +88,7 @@ class UserServiceTest {
 
         when(this.userSupport.populateUser(userDetails)).thenReturn(this.user);
         when(this.userRepository.save(user)).thenReturn(this.user);
-        when(this.userSupport.populateUserResponse(user)).thenReturn(this.userDetails);
+        when(this.userSupport.populateUserDetails(user)).thenReturn(this.userDetails);
 
         UserDetails response = this.userService.persistUser(this.userDetails);
         assertNotNull(response);
@@ -97,7 +97,7 @@ class UserServiceTest {
         verify(this.userRepository, times(1)).checkUserExistsByEmail("brt.rgharib@cma-cgm.com");
         verify(this.userSupport, times(1)).populateUser(userDetails);
         verify(this.userRepository, times(1)).save(user);
-        verify(this.userSupport, times(1)).populateUserResponse(user);
+        verify(this.userSupport, times(1)).populateUserDetails(user);
     }
 
     @Test
@@ -111,7 +111,7 @@ class UserServiceTest {
         verify(this.userRepository, times(0)).checkUserExistsByEmail(anyString());
         verify(this.userSupport, times(0)).populateUser(any());
         verify(this.userRepository, times(0)).save(any());
-        verify(this.userSupport, times(0)).populateUserResponse(any());
+        verify(this.userSupport, times(0)).populateUserDetails(any());
     }
 
     @Test
@@ -126,7 +126,7 @@ class UserServiceTest {
         verify(this.userRepository, times(1)).checkUserExistsByEmail(userDetails.getEmail());
         verify(this.userSupport, times(0)).populateUser(any());
         verify(this.userRepository, times(0)).save(any());
-        verify(this.userSupport, times(0)).populateUserResponse(any());
+        verify(this.userSupport, times(0)).populateUserDetails(any());
     }
 
     @Test
@@ -149,14 +149,14 @@ class UserServiceTest {
         verify(this.userRepository, times(1)).checkUserExistsByEmail("brt.rgharib@cma-cgm.com");
         verify(this.userSupport, times(0)).populateUser(any());
         verify(this.userRepository, times(0)).save(any());
-        verify(this.userSupport, times(0)).populateUserResponse(any());
+        verify(this.userSupport, times(0)).populateUserDetails(any());
     }
 
     @Test
     void whenGetUserByUid_isOK() {
 
         when(userRepository.findByUid(anyString())).thenReturn(Optional.of(this.user));
-        when(this.userSupport.populateUserResponse(user)).thenReturn(this.userDetails);
+        when(this.userSupport.populateUserDetails(user)).thenReturn(this.userDetails);
 
         UserDetails response = this.userService.getUserByUid("1234567");
 
@@ -176,7 +176,7 @@ class UserServiceTest {
 
         assertEquals("User Not found with ccgId: [nonExistentUid]", exception.getMessage());
         verify(this.userRepository, times(1)).findByUid(uid);
-        verify(this.userSupport, times(0)).populateUserResponse(any());
+        verify(this.userSupport, times(0)).populateUserDetails(any());
 
     }
 
@@ -188,7 +188,7 @@ class UserServiceTest {
         when(userRepository.findByEmailIgnoreCase(email))
                 .thenReturn(Optional.of(this.user));
 
-        when(this.userSupport.populateUserResponse(user)).thenReturn(this.userDetails);
+        when(this.userSupport.populateUserDetails(user)).thenReturn(this.userDetails);
 
         UserDetails response = this.userService.getUserByEmail(email);
 
@@ -208,7 +208,7 @@ class UserServiceTest {
 
         assertEquals("User Not found with email: [nonExistentEmail]", exception.getMessage());
         verify(this.userRepository, times(1)).findByEmailIgnoreCase(email);
-        verify(this.userSupport, times(0)).populateUserResponse(any());
+        verify(this.userSupport, times(0)).populateUserDetails(any());
     }
 
     @Test
@@ -244,7 +244,7 @@ class UserServiceTest {
         when(this.userRepository.findUserByEmailEqualsAndIdIsNot(email, user.getId())).thenReturn(Optional.empty());
         when(this.userSupport.populateUser(updateUserDetails)).thenReturn(updatedUser);
         when(userRepository.save(updatedUser)).thenReturn(updatedUser);
-        when(this.userSupport.populateUserResponse(updatedUser)).thenReturn(updateUserDetails);
+        when(this.userSupport.populateUserDetails(updatedUser)).thenReturn(updateUserDetails);
 
         this.roleStaticMock = mockStatic(Role.class);
         this.roleStaticMock.when(() -> Role.checkRoleExists(anyString()))
@@ -259,7 +259,7 @@ class UserServiceTest {
         verify(this.userRepository, times(1)).findUserByEmailEqualsAndIdIsNot(email, user.getId());
         verify(this.userSupport, times(1)).populateUser(updateUserDetails);
         verify(userRepository, times(1)).save(updatedUser);
-        verify(this.userSupport, times(1)).populateUserResponse(updatedUser);
+        verify(this.userSupport, times(1)).populateUserDetails(updatedUser);
     }
 
     @Test
@@ -275,7 +275,7 @@ class UserServiceTest {
         verify(this.userRepository, times(0)).findUserByEmailEqualsAndIdIsNot(anyString(), anyLong());
         verify(this.userSupport, times(0)).populateUser(any());
         verify(userRepository, times(0)).save(any());
-        verify(this.userSupport, times(0)).populateUserResponse(any());
+        verify(this.userSupport, times(0)).populateUserDetails(any());
     }
 
     @Test
@@ -310,7 +310,7 @@ class UserServiceTest {
         verify(this.userRepository, times(0)).findUserByEmailEqualsAndIdIsNot(anyString(), anyLong());
         verify(this.userSupport, times(0)).populateUser(any());
         verify(userRepository, times(0)).save(any());
-        verify(this.userSupport, times(0)).populateUserResponse(any());
+        verify(this.userSupport, times(0)).populateUserDetails(any());
     }
 
     @Test
@@ -346,7 +346,7 @@ class UserServiceTest {
         verify(this.userRepository, times(1)).findUserByEmailEqualsAndIdIsNot(email, user.getId());
         verify(this.userSupport, times(0)).populateUser(any());
         verify(userRepository, times(0)).save(any());
-        verify(this.userSupport, times(0)).populateUserResponse(any());
+        verify(this.userSupport, times(0)).populateUserDetails(any());
     }
 
     @Test
@@ -384,6 +384,6 @@ class UserServiceTest {
         verify(this.userRepository, times(1)).findUserByEmailEqualsAndIdIsNot(email, user.getId());
         verify(this.userSupport, times(0)).populateUser(any());
         verify(userRepository, times(0)).save(any());
-        verify(this.userSupport, times(0)).populateUserResponse(any());
+        verify(this.userSupport, times(0)).populateUserDetails(any());
     }
 }

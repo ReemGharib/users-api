@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("users")
 public class UserController {
+
     private final UserService userService;
 
     @ApiResponses(value = {
@@ -77,7 +78,7 @@ public class UserController {
     })
     @Operation(summary = "Get user by uid")
     @GetMapping("/{uid}")
-    public ResponseEntity<UserDetails> getUserByUid(@PathVariable("uid") String uid) {
+            public ResponseEntity<UserDetails> getUserByUid(@PathVariable("uid") String uid) {
 
         return ResponseEntity.ok(userService.getUserByUid(uid));
     }
@@ -89,7 +90,7 @@ public class UserController {
                             schema = @Schema(implementation = ErrorResponse.class))})
     })
     @Operation(summary = "Get user by email")
-    @GetMapping("/{email}")
+    @GetMapping("/emails/{email}")
     public ResponseEntity<UserDetails> getUserByEmail(@PathVariable("email") String email) {
 
         return ResponseEntity.ok(userService.getUserByEmail(email));
