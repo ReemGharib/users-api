@@ -2,11 +2,6 @@ info:
   app:
     tag: app-build-version-tag
 
-#server:
-#    port: 8080
-#    servlet:
-#        context-path: /users-api/v1
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
