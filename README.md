@@ -37,30 +37,10 @@ You can make HTTP requests to its endpoints to perform various operations like c
 **API Endpoints**
 
     GET /users
-* Description: Get a list of all users.
-* Response: A JSON array containing user objects.
-
-
-    POST /users
-* Description: Create a new user.
-* Request: A JSON object representing the user to be created.
-* Response: The newly created user object.
-
-
-    PUT /{uid}
-* Description: Update an existing user by their UID.
-* Request: A JSON object representing the updated user data.
-* Response: The updated user object.
-
-
     GET /{uid}
-* Description: Get a user by their UID.
-* Response: The user object with the specified UID.
-
-
-    GET /{email}
-Description: Get a user by their email address.
-Response: The user object with the specified email.
+    POST /users
+    PUT /{uid}
+    GET /emails/{uid}
 
 **Error Handling**
 
