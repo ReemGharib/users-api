@@ -45,7 +45,7 @@ springdoc:
     path: /api-docs
   swagger-ui:
     enabled: true
-    path: /swagger-ui/index.html
+    path: /swagger-ui.html
 
 management:
     endpoints:
