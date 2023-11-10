@@ -48,4 +48,4 @@ The API uses standard HTTP status codes to indicate the success or failure of a 
 
 **Interactive Documentation**
 
-To interactively explore and test the API, you can access the Swagger documentation at http://localhost:9999/users-api/swagger-ui.html. It provides a user-friendly interface for testing the API endpoints and understanding request and response formats
+To interactively explore and test the API, you can access the Swagger documentation at http://localhost:9999/users/api/swagger-ui.html. It provides a user-friendly interface for testing the API endpoints and understanding request and response formats
